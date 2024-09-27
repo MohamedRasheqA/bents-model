@@ -17,14 +17,8 @@ import langsmith
 
 from flask_cors import CORS
 
-
 app = Flask(__name__)
-CORS(app, resources={r"/*": {
-    "origins": ["https://bents-model.vercel.app", "https://bents-model-4ppw.vercel.app"],
-    "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-    "allow_headers": ["Content-Type", "Authorization"],
-    "supports_credentials": True
-}})
+CORS(app, resources={r"/*": {"origins": "https://bents-model.vercel.app/"}})
 
 
 
@@ -35,10 +29,10 @@ app.secret_key = os.urandom(24)  # Set a secret key for sessions
 # Access your API keys (set these in environment variables)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
 TRANSCRIPT_INDEX_NAMES = ["bents", "shop-improvement", "tool-recommendations"]
 PRODUCT_INDEX_NAME = "bents-woodworking-products"
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
 os.environ["LANGCHAIN_PROJECT"] = "jason-json"
 
