@@ -76,7 +76,7 @@ export default function Shop() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5002/documents')
+        const response = await axios.get('https://bents-model-4ppw.vercel.app/documents')
         // Assuming the backend returns an array of arrays with [id, title, tags, link]
         const formattedProducts = response.data.map(product => ({
           id: product[0],
