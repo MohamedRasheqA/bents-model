@@ -7,21 +7,14 @@ const app = express();
 const port = 5002;
 
 const corsOptions = {
-  origin: ['https://bents-model.vercel.app', 'https://bents-model-4ppw.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: ['https://bents-model.vercel.app/'], // Allow requests from your React app
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  credentials: true, // Allow credentials
 };
 
-app.use(cors(corsOptions));
-
-// Update FLASK_BACKEND_URL
-const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app';  // Make sure this matches your actual Flask backend URL
-
-// Add OPTIONS handling for preflight requests
-app.options('*', cors(corsOptions));
-
 // Middleware
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 
@@ -29,6 +22,7 @@ app.use(bodyParser.json());
 //connectDb();
 
 // Flask backend URL
+const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app/';  // Assuming Flask runs on port 5001
 
 app.get("/",(req,res)=>
 {
@@ -66,10 +60,6 @@ app.post('/chat', async (req, res) => {
 // Route to get all documents (products)
 app.get('/documents', async (req, res) => {
   try {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, 
-    Accept, x-client-key, x-client-token, x-client-secret, Authorization");
     const response = await axios.get(`${FLASK_BACKEND_URL}/documents`);
     res.json(response.data);
   } catch (error) {
@@ -112,6 +102,6 @@ app.post('/update_document', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+/*app.listen(port, () => {
   console.log(`Express server is running on http://localhost:${port}`);
-});
+}); */
