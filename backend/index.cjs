@@ -7,14 +7,21 @@ const app = express();
 const port = 5002;
 
 const corsOptions = {
-  origin: ['https://bents-model.vercel.app/'], // Allow requests from your React app
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: ['https://bents-model.vercel.app', 'https://bents-model-4ppw.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Allow credentials
+  credentials: true,
 };
 
-// Middleware
 app.use(cors(corsOptions));
+
+// Update FLASK_BACKEND_URL
+const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app';  // Make sure this matches your actual Flask backend URL
+
+// Add OPTIONS handling for preflight requests
+app.options('*', cors(corsOptions));
+
+// Middleware
 app.use(bodyParser.json());
 
 
@@ -22,7 +29,6 @@ app.use(bodyParser.json());
 //connectDb();
 
 // Flask backend URL
-const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app';  // Assuming Flask runs on port 5001
 
 app.get("/",(req,res)=>
 {
