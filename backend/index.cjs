@@ -102,6 +102,6 @@ app.post('/update_document', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+/*app.listen(port, () => {
   console.log(`Express server is running on http://localhost:${port}`);
-});
+}); */
