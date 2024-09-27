@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "bents-model-4ppw.vercel.app/",
+  "proxy": "https://bents-model-4ppw.vercel.app/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
