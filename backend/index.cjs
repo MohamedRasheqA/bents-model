@@ -24,6 +24,10 @@ app.use(bodyParser.json());
 // Flask backend URL
 const FLASK_BACKEND_URL = 'http://localhost:5000';  // Assuming Flask runs on port 5001
 
+app.get("/",(req,res)=>
+{
+  res.send("Server is running");
+})
 // Route to handle contact form submission
 app.post('/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
