@@ -7,7 +7,7 @@ const app = express();
 const port = 5002;
 
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow requests from your React app
+  origin: 'https://bents-model.vercel.app/', // Allow requests from your React app
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // Allow credentials
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 //connectDb();
 
 // Flask backend URL
-const FLASK_BACKEND_URL = 'http://localhost:5000';  // Assuming Flask runs on port 5001
+const FLASK_BACKEND_URL = 'https://bents-model-7szw-llm.vercel.app/';  // Assuming Flask runs on port 5001
 
 app.get("/",(req,res)=>
 {
