@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "frontend/bents_woodworking/package.json", "use": "@vercel/static-build" },
+      { "src": "LLM-SERVER/api/**/*.py", "use": "@vercel/python" },
+      { "src": "server/api/**/*.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/LLM-SERVER/api/$1" },
+      { "src": "/(.*)", "dest": "/frontend/bents_woodworking/$1" }
+    ]
+  }
