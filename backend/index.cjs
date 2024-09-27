@@ -7,37 +7,32 @@ const app = express();
 const port = 5002;
 
 const corsOptions = {
-  origin: ['https://bents-model.vercel.app/'], // Allow requests from your React app
+  origin: ['https://bents-model.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Allow credentials
+  credentials: true,
 };
 
 // Middleware
-app.use(cors(corsOptions));
 app.use(bodyParser.json());
-
 
 // Connect to the database
 //connectDb();
 
 // Flask backend URL
-const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app/';  // Assuming Flask runs on port 5001
+const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app/';
 
-app.get("/",(req,res)=>
-{
+app.get("/", (req, res) => {
   res.send("Server is running");
-})
-// Route to handle contact form submission
-app.post('/contact', async (req, res) => {
-  const { name, email, subject, message } = req.body;
+});
 
+// Apply CORS to specific routes
+app.post('/contact', cors(corsOptions), async (req, res) => {
+  const { name, email, subject, message } = req.body;
   try {
-    // Insert form data into the PostgreSQL table
     const query = 'INSERT INTO contacts(name, email, subject, message) VALUES($1, $2, $3, $4) RETURNING *';
     const values = [name, email, subject, message];
     const result = await pool.query(query, values);
-
     res.json({ message: 'Message received successfully!', data: result.rows[0] });
   } catch (err) {
     console.error('Error saving contact data:', err);
@@ -45,8 +40,7 @@ app.post('/contact', async (req, res) => {
   }
 });
 
-// Route to handle chat requests
-app.post('/chat', async (req, res) => {
+app.post('/chat', cors(corsOptions), async (req, res) => {
   try {
     const response = await axios.post(`${FLASK_BACKEND_URL}/chat`, req.body);
     res.json(response.data);
@@ -56,9 +50,7 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-
-// Route to get all documents (products)
-app.get('/documents', async (req, res) => {
+app.get('/documents', cors(corsOptions), async (req, res) => {
   try {
     const response = await axios.get(`${FLASK_BACKEND_URL}/documents`);
     res.json(response.data);
@@ -68,8 +60,7 @@ app.get('/documents', async (req, res) => {
   }
 });
 
-// Route to add a document (product)
-app.post('/add_document', async (req, res) => {
+app.post('/add_document', cors(corsOptions), async (req, res) => {
   try {
     const response = await axios.post(`${FLASK_BACKEND_URL}/add_document`, req.body);
     res.json(response.data);
@@ -79,8 +70,7 @@ app.post('/add_document', async (req, res) => {
   }
 });
 
-// Route to delete a document (product)
-app.post('/delete_document', async (req, res) => {
+app.post('/delete_document', cors(corsOptions), async (req, res) => {
   try {
     const response = await axios.post(`${FLASK_BACKEND_URL}/delete_document`, req.body);
     res.json(response.data);
@@ -90,8 +80,7 @@ app.post('/delete_document', async (req, res) => {
   }
 });
 
-// Route to update a document (product)
-app.post('/update_document', async (req, res) => {
+app.post('/update_document', cors(corsOptions), async (req, res) => {
   try {
     const response = await axios.post(`${FLASK_BACKEND_URL}/update_document`, req.body);
     res.json(response.data);
@@ -102,6 +91,6 @@ app.post('/update_document', async (req, res) => {
 });
 
 // Start the server
-/*app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Express server is running on http://localhost:${port}`);
-}); */
+});
