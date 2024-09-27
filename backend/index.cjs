@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 //connectDb();
 
 // Flask backend URL
-const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app/';  // Assuming Flask runs on port 5001
+const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app';  // Assuming Flask runs on port 5001
 
 app.get("/",(req,res)=>
 {
