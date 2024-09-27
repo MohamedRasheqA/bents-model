@@ -17,11 +17,14 @@ import langsmith
 
 from flask_cors import CORS
 
+
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": [
-    "https://bents-model.vercel.app",
-    "https://bents-model-4ppw.vercel.app"
-], "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"], "allow_headers": "*"}})
+CORS(app, resources={r"/*": {
+    "origins": ["https://bents-model.vercel.app", "https://bents-model-4ppw.vercel.app"],
+    "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+    "allow_headers": ["Content-Type", "Authorization"],
+    "supports_credentials": True
+}})
 
 
 
