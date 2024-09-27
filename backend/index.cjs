@@ -2,14 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const { pool, connectDb } = require('./config/dbConnection.cjs');
 const app = express();
-const port = 5002;
 
 const corsOptions = {
-  origin: 'https://bents-model.vercel.app/', // Allow requests from your React app
+  origin: ['https://bents-model.vercel.app'], // Allow requests from your React app
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // Allow credentials
 };
 
@@ -22,7 +19,7 @@ app.use(bodyParser.json());
 //connectDb();
 
 // Flask backend URL
-const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app/';  // Assuming Flask runs on port 5001
+const FLASK_BACKEND_URL = 'https://bents-model-ijmx.vercel.app';  // Assuming Flask runs on port 5001
 
 app.get("/",(req,res)=>
 {
@@ -102,6 +99,6 @@ app.post('/update_document', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+/*app.listen(port, () => {
   console.log(`Express server is running on http://localhost:${port}`);
-});
+}); */
