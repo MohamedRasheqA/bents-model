@@ -20,9 +20,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://bents-model.vercel.app/"}})
 
-@app.route('/')
-def serve_spa():
-    return render_template('index.html')
+
 
 
 app = Flask(__name__)
@@ -188,9 +186,13 @@ def upsert_transcript(transcript_text, metadata, index_name):
     
     transcript_vector_stores[index_name].add_documents(documents)
 
+@app.route('/')
+@app.route('/database')
+def serve_spa():
+    return render_template('index.html')
 
 import logging
-
+from flask import jsonify, request
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -357,4 +359,4 @@ def update_document():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
