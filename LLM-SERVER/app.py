@@ -20,7 +20,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://bents-model.vercel.app/"}})
 
-
+@app.route('/')
+def serve_spa():
+    return render_template('index.html')
 
 
 app = Flask(__name__)
