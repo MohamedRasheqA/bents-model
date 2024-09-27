@@ -34,7 +34,7 @@ export default function Chat() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:5002/chat', {
+      const response = await axios.post('https://bents-model-4ppw.vercel.app/chat', {
         message: searchQuery,
         selected_index: selectedIndex,
         chat_history: conversations.flatMap(conv => [conv.question, conv.text])
